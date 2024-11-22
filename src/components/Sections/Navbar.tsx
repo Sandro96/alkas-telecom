@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
       <div className="h-12 flex justify-between items-center container mx-auto">
         <a className="flex">
           <img
-            src="src/assets/svg/icon-extender.svg"
+            src="/public/svg/icon-extender.svg"
             alt="Extender Icon"
             className="h-8 cursor-pointer"
           />
