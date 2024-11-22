@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import Navbar, { CountryProvider } from "./components/Sections/Navbar";
 import Hero from "./components/Sections/Hero";

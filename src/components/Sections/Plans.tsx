@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import clsx from "clsx";
 import plansBanner from "../../assets/img/banner-plans.webp";
-import { plansData, Plan, CountryData } from "../../assets/data/plansData";
+import { plansData, Plan, CountryData } from "../../assets/data/PlansData";
 import { CountryContext } from "./Navbar";
 
 const Plans: React.FC = () => {
