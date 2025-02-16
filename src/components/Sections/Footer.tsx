@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
                 target="_blank"
                 className="hover:text-white"
               >
-                Sandro Ramirez | Alkas Security
+                Sandro Ramirez | Alkas Telecom
               </a>
               <p>Proyecto demostrativo</p>
             </div>
