@@ -25,7 +25,10 @@ const Footer: React.FC = () => {
             <hr className="footer__top__hr w-full border-gray-300" />
             <div className="footer__top__a flex flex-wrap justify-evenly my-5 w-full text-white text-s">
               {footerData.map((section) => (
-                <div key={section.title} className="footer__top__a__card text-center">
+                <div
+                  key={section.title}
+                  className="footer__top__a__card text-center"
+                >
                   <h5 className="font-bold mb-2">{section.title}</h5>
                   <div className="footer__top__a__card__selects flex flex-col">
                     {section.links.map((link) => (
@@ -44,9 +47,16 @@ const Footer: React.FC = () => {
         </div>
         <div className="footer__bot bg-accent py-4">
           <div className="container mx-auto">
-            <h6 className="footer__bot__text text-black text-center">
-              <b>Sandro Ramirez</b> | Todos los derechos reservados | <b>Alkas Telecom</b>
-            </h6>
+            <div className="text-center">
+              <a
+                href="https://www.ramirezsandro.com"
+                target="_blank"
+                className="hover:text-white"
+              >
+                Sandro Ramirez | Alkas Security
+              </a>
+              <p>Proyecto demostrativo</p>
+            </div>
           </div>
         </div>
       </div>

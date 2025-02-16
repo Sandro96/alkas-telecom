@@ -12,19 +12,19 @@ export default {
         contrast: "#FF3300", 
       },
       fontFamily: {
-        sans: ["Gilroy", "sans-serif"], // Reemplaza por tu tipografía
+        sans: ["Gilroy", "sans-serif"],
       },
       width: {
-        container: "1280px", // Ancho principal para container
-        "container-md": "750px", // Ancho medio
-        "container-sm": "360px", // Ancho pequeño
+        container: "1280px",
+        "container-md": "750px",
+        "container-sm": "360px",
       },
       fontSize: {
         h1: ["35px", { fontWeight: "normal" }],
         h2: ["32px", { fontWeight: "normal" }],
         h3: ["24px", { fontWeight: "normal" }],
         h4: ["20px", { fontWeight: "normal" }],
-        h5: ["14px", { fontWeight: "normal", color: "#00FF99" }], // var(--color-terciario)
+        h5: ["14px", { fontWeight: "normal", color: "#00FF99" }],
         h6: ["12px", { fontWeight: "normal" }],
         p: ["15px", { fontWeight: "normal" }],
       },
