@@ -4,7 +4,7 @@ import { footerData } from "../../assets/data/Footer";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer">
+    <footer className="footer mt-8 md:mt-16 lg:mt-24">
       <div className="footer__container flex flex-col">
         <div className="w-full bg-primary">
           <div className="container mx-auto flex flex-col items-center">

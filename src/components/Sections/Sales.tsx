@@ -1,71 +1,99 @@
 import React from "react";
-import clsx from "clsx";
-import { products } from "../../assets/data/Products";
+import { motion } from 'framer-motion';
+import { useCountry } from "../../contexts/CountryContext";
+import { usePricing } from "../../hooks/usePricing";
+import { ProductCard } from "../ui/ProductCard";
 
 const Sales: React.FC = () => {
+  const { selectedCountry } = useCountry();
+  const { products } = usePricing(selectedCountry);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 12
+      }
+    }
+  };
+
+  const handleAddToCart = (product: any) => {
+    console.log('Producto agregado:', product.name);
+  };
+
   return (
-    <div className="sales my-10">
+    <motion.section 
+      className="sales my-10"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
       <div className="container mx-auto">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold">¡Nuestras ofertas!</h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
-          {products.map((item) => (
-            <div
-              key={item.id}
-              className={clsx(
-                "p-5 border border-gray-300 rounded-lg shadow-lg text-center",
-                "w-[350px] h-[500px]"
-              )}
+        <motion.div 
+          className="text-center mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <h2 className="text-3xl font-bold text-primary mb-2">¡Nuestras ofertas!</h2>
+          <p className="text-gray-600">Descubre los mejores precios en tecnología</p>
+          <p className="text-sm text-gray-500 mt-2">
+            Precios en {products[0]?.currency?.name || 'Peso Uruguayo'} para {selectedCountry}
+          </p>
+        </motion.div>
+        
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 justify-items-center"
+          variants={containerVariants}
+        >
+          {products.map((product) => (
+            <motion.div
+              key={product.id}
+              variants={itemVariants}
+              whileHover={{ 
+                scale: 1.02,
+                transition: { type: "spring", stiffness: 300, damping: 20 }
+              }}
             >
-              <div
-                className={clsx(
-                  "mb-4 h-[250px] flex justify-center items-center"
-                )}
-              >
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="object-contain max-h-full max-w-full"
-                />
-              </div>
-              <h3 className={clsx("text-xl font-bold mb-4")}>{item.name}</h3>
-              <div className={clsx("mb-6")}>
-                <p className={clsx("text-red-300 line-through")}>
-                  {item.beforePrice}
-                </p>
-                <p className={clsx("font-bold text-[28px]")}>
-                  {item.afterPrice}
-                </p>
-                <p className={clsx("text-sm text-gray-600")}>
-                  {item.totalPrice}
-                </p>
-              </div>
-              <a
-                className={clsx(
-                  "inline-block font-bold bg-primary text-white py-2 px-8 rounded",
-                  "hover:bg-accent hover:text-black hover:scale-105",
-                  "transition duration-300 cursor-pointer"
-                )}
-              >
-                Lo quiero
-              </a>
-            </div>
+              <ProductCard 
+                product={product}
+                onAddToCart={handleAddToCart}
+              />
+            </motion.div>
           ))}
-        </div>
-        <div className="text-center mt-8">
-          <a
-            className={clsx(
-              "inline-block font-bold bg-primary text-white py-2 px-6 rounded",
-              "hover:bg-accent hover:text-black hover:scale-105",
-              "transition duration-300 cursor-pointer"
-            )}
+        </motion.div>
+        
+        <motion.div 
+          className="text-center mt-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+        >
+          <motion.button
+            className="inline-block font-bold bg-primary text-white py-3 px-8 rounded-lg hover:bg-accent hover:text-black hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Ver más
-          </a>
-        </div>
+            Ver más ofertas
+          </motion.button>
+        </motion.div>
       </div>
-    </div>
+    </motion.section>
   );
 };
 

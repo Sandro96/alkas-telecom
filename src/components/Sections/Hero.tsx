@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import clsx from "clsx";
+import { motion, AnimatePresence } from 'framer-motion';
 
 import bannerCel1 from "../../assets/img/banner-cel-1.webp";
 import bannerTablet1 from "../../assets/img/banner-tablet-1.webp";
@@ -15,6 +15,7 @@ import bannerPc3 from "../../assets/img/banner-pc-3.webp";
 
 const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   const images = [
     { mobile: bannerCel1, tablet: bannerTablet1, desktop: bannerPc1 },
@@ -24,42 +25,74 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setDirection(1);
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 5000);
 
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const currentImage =
-    window.innerWidth >= 1024
-      ? images[currentIndex].desktop
-      : window.innerWidth >= 768
-      ? images[currentIndex].tablet
-      : images[currentIndex].mobile;
+  const paginate = (newDirection: number) => {
+    setDirection(newDirection);
+    setCurrentIndex((prevIndex) => {
+      const newIndex = prevIndex + newDirection;
+      if (newIndex >= images.length) return 0;
+      if (newIndex < 0) return images.length - 1;
+      return newIndex;
+    });
+  };
+
+  const variants = {
+    enter: {
+      opacity: 0
+    },
+    center: {
+      zIndex: 1,
+      opacity: 1
+    },
+    exit: {
+      zIndex: 0,
+      opacity: 0
+    }
+  };
+
+  const getCurrentImage = () => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 1280
+        ? images[currentIndex].desktop
+        : window.innerWidth >= 768
+        ? images[currentIndex].tablet
+        : images[currentIndex].mobile;
+    }
+    return images[currentIndex].desktop;
+  };
 
   return (
     <header className="my-10">
       <div className="flex flex-col items-center mx-auto relative">
-        <div
-          className={clsx(
-            "shadow-[inset_-1px_-1px_3px_black,inset_1px_1px_3px_black]",
-            "w-[360px] h-[600px] bg-cover bg-center",
-            "sm:w-[750px] sm:h-[350px]",
-            "md:w-[1280px] md:h-[450px]"
-          )}
-          style={{ backgroundImage: `url(${currentImage})` }}
-        ></div>
-        <div className="mt-5 flex space-x-2 items-center">
+        <div className="relative w-[360px] h-[600px] lg:w-[768px] lg:h-[360px] xl:w-[1280px] xl:h-[450px] overflow-hidden rounded-xl shadow-2xl">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: `url(${getCurrentImage()})` 
+            }}
+          />
+          
+        </div>
+        
+        {/* Dots Indicator */}
+        <div className="mt-5 flex space-x-3 items-center">
           {images.map((_, index) => (
-            <div
+            <button
               key={index}
-              className={clsx(
-                "rounded-full",
-                index === currentIndex
-                  ? "bg-accent w-4 h-4"
-                  : "bg-gray-400 w-2 h-2"
-              )}
-            ></div>
+              className={`w-3 h-3 rounded-full cursor-pointer transition-colors duration-300 ${
+                index === currentIndex ? "bg-accent" : "bg-neutral-400 hover:bg-neutral-500"
+              }`}
+              onClick={() => {
+                setDirection(index > currentIndex ? 1 : -1);
+                setCurrentIndex(index);
+              }}
+            />
           ))}
         </div>
       </div>
