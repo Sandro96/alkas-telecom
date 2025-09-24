@@ -19,8 +19,8 @@ export const usePricing = (country: string) => {
     return formatPrice(price, currency);
   };
 
-  const getPlansByCity = (city: string) => {
-    return getLocalizedPlansByCity(country, city);
+  const getPlansByCity = () => {
+    return getLocalizedPlansByCity(country);
   };
 
   return {
