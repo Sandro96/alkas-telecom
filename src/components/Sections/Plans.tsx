@@ -29,7 +29,7 @@ const Plans: React.FC = () => {
   };
 
   const handlePlanChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const plans = selectedCity ? getPlansByCity(selectedCity) : [];
+    const plans = selectedCity ? getPlansByCity() : [];
     const plan = plans.find((plan: Plan) => plan.name === e.target.value);
     setSelectedPlan(plan || null);
   };
@@ -148,7 +148,7 @@ const Plans: React.FC = () => {
                 Selecciona tu plan
               </option>
               {selectedCity &&
-                getPlansByCity(selectedCity).map((plan) => (
+                getPlansByCity().map((plan) => (
                   <option key={plan.name} value={plan.name}>
                     {plan.name} - {plan.price}
                   </option>
