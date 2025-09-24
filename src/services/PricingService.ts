@@ -165,7 +165,7 @@ export const getLocalizedPlans = (country: string) => {
 };
 
 // Función para obtener planes por ciudad con precios localizados
-export const getLocalizedPlansByCity = (country: string, city: string) => {
+export const getLocalizedPlansByCity = (country: string) => {
   const basePlansForCity = basePlans.map(plan => {
     const price = convertPrice(plan.basePriceUSD, country);
     return {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
 
 import bannerCel1 from "../../assets/img/banner-cel-1.webp";
 import bannerTablet1 from "../../assets/img/banner-tablet-1.webp";
@@ -15,7 +14,6 @@ import bannerPc3 from "../../assets/img/banner-pc-3.webp";
 
 const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
 
   const images = [
     { mobile: bannerCel1, tablet: bannerTablet1, desktop: bannerPc1 },
@@ -25,36 +23,12 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDirection(1);
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 5000);
 
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const paginate = (newDirection: number) => {
-    setDirection(newDirection);
-    setCurrentIndex((prevIndex) => {
-      const newIndex = prevIndex + newDirection;
-      if (newIndex >= images.length) return 0;
-      if (newIndex < 0) return images.length - 1;
-      return newIndex;
-    });
-  };
-
-  const variants = {
-    enter: {
-      opacity: 0
-    },
-    center: {
-      zIndex: 1,
-      opacity: 1
-    },
-    exit: {
-      zIndex: 0,
-      opacity: 0
-    }
-  };
 
   const getCurrentImage = () => {
     if (typeof window !== 'undefined') {
@@ -88,10 +62,7 @@ const Hero: React.FC = () => {
               className={`w-3 h-3 rounded-full cursor-pointer transition-colors duration-300 ${
                 index === currentIndex ? "bg-accent" : "bg-neutral-400 hover:bg-neutral-500"
               }`}
-              onClick={() => {
-                setDirection(index > currentIndex ? 1 : -1);
-                setCurrentIndex(index);
-              }}
+              onClick={() => setCurrentIndex(index)}
             />
           ))}
         </div>
